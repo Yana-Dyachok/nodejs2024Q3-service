@@ -1,4 +1,5 @@
-export interface User {
+import { User } from 'src/user/entities/user.entity';
+export interface IUser {
   id: string;
   login: string;
   password: string;
@@ -7,13 +8,13 @@ export interface User {
   updatedAt: number;
 }
 
-export interface Artist {
+export interface IArtist {
   id: string;
   name: string;
   grammy: boolean;
 }
 
-export interface Track {
+export interface ITrack {
   id: string;
   name: string;
   artistId: string | null;
@@ -21,31 +22,35 @@ export interface Track {
   duration: number;
 }
 
-export interface Album {
+export interface IAlbum {
   id: string;
   name: string;
   year: number;
   artistId: string | null;
 }
 
-export interface Favorites {
+export interface IFavorites {
   artists: string[];
   albums: string[];
   tracks: string[];
 }
 
-export interface CreateUserDto {
+export interface ICreateUserDto {
   login: string;
   password: string;
 }
 
-export interface UpdatePasswordDto {
+export interface IUpdatePasswordDto {
   oldPassword: string;
   newPassword: string;
 }
 
-export interface FavoritesResponse {
-  artists: Artist[];
-  albums: Album[];
-  tracks: Track[];
+export interface IFavoritesResponse {
+  artists: IArtist[];
+  albums: IAlbum[];
+  tracks: ITrack[];
+}
+
+export interface IDatabase {
+  users: User[];
 }
