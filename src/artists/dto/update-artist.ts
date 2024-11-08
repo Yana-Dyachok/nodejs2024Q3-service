@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateArtistDto } from './create-artist.dto';
+import { CreateArtistDto } from './create-artist';
 import { IsString, IsBoolean, IsNotEmpty } from 'class-validator';
 
 export class UpdateArtistDto extends PartialType(CreateArtistDto) {

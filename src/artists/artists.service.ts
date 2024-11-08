@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { isBoolean, isString } from 'class-validator';
-import { CreateArtistDto } from './dto/create-artist.dto';
-import { UpdateArtistDto } from './dto/update-artist.dto';
+import { CreateArtistDto } from './dto/create-artist';
+import { UpdateArtistDto } from './dto/update-artist';
 import { Artist } from './entities/artist.entity';
 import { Database } from 'src/db/db';
 
@@ -67,6 +67,11 @@ export class ArtistService {
         `Artist with id ${id} is not found in the database`,
       );
     }
+    Database.albums.forEach((album) => {
+      if (album.artistId === id) {
+        album.artistId = null;
+      }
+    });
     Database.artists.splice(currentArtistId, 1);
   }
 }

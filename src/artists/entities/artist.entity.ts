@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { IArtist } from 'src/types/interfaces/interfaces';
 
 export class Artist implements IArtist {
-  @ApiProperty({ required: true, format: 'id' })
+  @ApiProperty({ required: true, format: 'uuid' })
   id: string;
 
   @ApiProperty({ required: true, example: 'Beyonce' })

@@ -1,5 +1,6 @@
 import { User } from 'src/user/entities/user.entity';
 import { Artist } from 'src/artists/entities/artist.entity';
+import { Album } from 'src/album/entities/album.entity';
 
 export interface IUser {
   id: string;
@@ -56,4 +57,5 @@ export interface IFavoritesResponse {
 export interface IDatabase {
   users: User[];
   artists: Artist[];
+  albums: Album[];
 }

@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ArtistsModule } from './artists/artists.module';
-import * as dotenv from 'dotenv';
+import { AlbumModule } from './album/album.module';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -21,6 +22,7 @@ const port = process.env.PORT;
     }),
     UserModule,
     ArtistsModule,
+    AlbumModule,
   ],
   controllers: [AppController],
   providers: [AppService],
