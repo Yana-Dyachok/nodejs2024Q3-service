@@ -4,4 +4,5 @@ export const Database: IDatabase = {
   users: [],
   artists: [],
   albums: [],
+  tracks: [],
 };

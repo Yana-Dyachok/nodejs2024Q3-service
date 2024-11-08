@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ArtistsModule } from './artists/artists.module';
 import { AlbumModule } from './album/album.module';
+import { TracksModule } from './track/tracks.module';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ const port = process.env.PORT;
     UserModule,
     ArtistsModule,
     AlbumModule,
+    TracksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

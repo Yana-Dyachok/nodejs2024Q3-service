@@ -1,13 +1,14 @@
-import {
-  Injectable,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
-import { isString, isInt, isUUID } from 'class-validator';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album';
 import { UpdateAlbumDto } from './dto/update-album';
 import { Album } from './entities/album.entity';
 import { Database } from 'src/db/db';
+import {
+  validateId,
+  findModuleById,
+  validateString,
+  validateInteger,
+} from 'src/utils/validation';
 
 @Injectable()
 export class AlbumService {
@@ -17,30 +18,30 @@ export class AlbumService {
 
   create(createAlbumDto: CreateAlbumDto): Album {
     const newAlbum = new Album(createAlbumDto);
-    this.validateArtistId(newAlbum.artistId);
+    validateId(newAlbum.artistId, Database.artists);
     Database.albums.push(newAlbum);
     return newAlbum;
   }
 
   findOne(id: string): Album {
-    return this.findAlbumById(id);
+    return findModuleById(id, Database.albums, 'Album');
   }
 
   update(id: string, updateAlbumDto: UpdateAlbumDto): Album {
-    const album = this.findAlbumById(id);
+    const album = findModuleById(id, Database.albums, 'Album');
 
     if (updateAlbumDto.name) {
-      this.validateString(updateAlbumDto.name, 'Name');
+      validateString(updateAlbumDto.name, 'Name');
       album.name = updateAlbumDto.name;
     }
 
     if (updateAlbumDto.year) {
-      this.validateInteger(updateAlbumDto.year, 'Year');
+      validateInteger(updateAlbumDto.year, 'Year');
       album.year = updateAlbumDto.year;
     }
 
     if (updateAlbumDto.artistId) {
-      this.validateArtistId(updateAlbumDto.artistId);
+      validateId(updateAlbumDto.artistId, Database.artists);
       album.artistId = updateAlbumDto.artistId;
     }
 
@@ -52,40 +53,11 @@ export class AlbumService {
     if (index === -1) {
       throw new NotFoundException(`Album with ID ${id} not found`);
     }
+    Database.tracks.forEach((track) => {
+      if (track.albumId === id) {
+        track.albumId = null;
+      }
+    });
     Database.albums.splice(index, 1);
-  }
-
-  private findAlbumById(id: string): Album {
-    const album = Database.albums.find((album) => album.id === id);
-    if (!album) {
-      throw new NotFoundException(`Album with ID ${id} not found`);
-    }
-    return album;
-  }
-
-  private validateArtistId(artistId: string | null): void {
-    if (artistId && !isUUID(artistId, '4')) {
-      throw new BadRequestException(
-        `Artist ID ${artistId} must be a valid UUID`,
-      );
-    }
-    if (
-      artistId &&
-      !Database.artists.find((artist) => artist.id === artistId)
-    ) {
-      throw new NotFoundException(`Artist with ID ${artistId} not found`);
-    }
-  }
-
-  private validateString(value: string, field: string): void {
-    if (!isString(value)) {
-      throw new BadRequestException(`${field} must be a string`);
-    }
-  }
-
-  private validateInteger(value: number, field: string): void {
-    if (!isInt(value)) {
-      throw new BadRequestException(`${field} must be an integer`);
-    }
   }
 }

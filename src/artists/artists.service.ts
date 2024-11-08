@@ -72,6 +72,11 @@ export class ArtistService {
         album.artistId = null;
       }
     });
+    Database.tracks.forEach((track) => {
+      if (track.artistId === id) {
+        track.artistId = null;
+      }
+    });
     Database.artists.splice(currentArtistId, 1);
   }
 }
