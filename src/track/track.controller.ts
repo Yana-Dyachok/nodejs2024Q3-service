@@ -14,10 +14,12 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track';
 import { UpdateTrackDto } from './dto/update-track';
 
+@ApiTags('Tracks')
 @Controller('track')
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}

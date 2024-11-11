@@ -13,10 +13,12 @@ import {
   ClassSerializerInterceptor,
   NotFoundException,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user';
 import { UpdateUserDto } from './dto/update-user';
 import { UserService } from './user.service';
 
+@ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

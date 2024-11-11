@@ -27,7 +27,7 @@ async function bootstrap() {
   app.enableCors();
   await app.listen(port);
   console.log(`Application is running on: http://localhost:${port}`);
-  console.log(`Swagger Module is running on: http://localhost:${port}/doc`);
+  console.log(`OpenAPI is running on: http://localhost:${port}/doc`);
 }
 
 bootstrap();

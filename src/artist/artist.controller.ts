@@ -14,10 +14,12 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateArtistDto } from './dto/create-artist';
 import { UpdateArtistDto } from './dto/update-artist';
 import { ArtistService } from './artist.service';
 
+@ApiTags('Artists')
 @Controller('artist')
 export class ArtistController {
   constructor(private readonly artistService: ArtistService) {}

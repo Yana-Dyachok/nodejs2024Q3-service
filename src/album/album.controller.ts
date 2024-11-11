@@ -14,10 +14,12 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateAlbumDto } from './dto/create-album';
 import { UpdateAlbumDto } from './dto/update-album';
 import { AlbumService } from './album.service';
 
+@ApiTags('Albums')
 @Controller('album')
 export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
