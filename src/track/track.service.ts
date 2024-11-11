@@ -59,11 +59,13 @@ export class TrackService {
     if (index === -1) {
       throw new NotFoundException(`Track with ID ${id} not found`);
     }
-    Database.favorites.tracks.forEach((favorites) => {
-      if (favorites.id === id) {
-        favorites.id = null;
-      }
-    });
+    const indexFavs = Database.favorites.tracks.findIndex(
+      (favorite) => favorite.id === id,
+    );
+    if (indexFavs !== -1) {
+      Database.favorites.tracks.splice(indexFavs, 1);
+    }
+
     Database.tracks.splice(index, 1);
   }
 }

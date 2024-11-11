@@ -77,11 +77,12 @@ export class ArtistService {
         track.artistId = null;
       }
     });
-    Database.favorites.artists.forEach((favorites) => {
-      if (favorites.id === id) {
-        favorites.id = null;
-      }
-    });
+    const indexFavs = Database.favorites.artists.findIndex(
+      (favorite) => favorite.id === id,
+    );
+    if (indexFavs !== -1) {
+      Database.favorites.artists.splice(indexFavs, 1);
+    }
     Database.artists.splice(currentArtistId, 1);
   }
 }

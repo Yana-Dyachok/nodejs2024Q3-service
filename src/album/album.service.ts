@@ -58,11 +58,12 @@ export class AlbumService {
         track.albumId = null;
       }
     });
-    Database.favorites.albums.forEach((favorites) => {
-      if (favorites.id === id) {
-        favorites.id = null;
-      }
-    });
+    const indexFavs = Database.favorites.albums.findIndex(
+      (favorite) => favorite.id === id,
+    );
+    if (indexFavs !== -1) {
+      Database.favorites.albums.splice(indexFavs, 1);
+    }
     Database.albums.splice(index, 1);
   }
 }
