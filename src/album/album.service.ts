@@ -58,6 +58,11 @@ export class AlbumService {
         track.albumId = null;
       }
     });
+    Database.favorites.albums.forEach((favorites) => {
+      if (favorites.id === id) {
+        favorites.id = null;
+      }
+    });
     Database.albums.splice(index, 1);
   }
 }

@@ -77,6 +77,11 @@ export class ArtistService {
         track.artistId = null;
       }
     });
+    Database.favorites.artists.forEach((favorites) => {
+      if (favorites.id === id) {
+        favorites.id = null;
+      }
+    });
     Database.artists.splice(currentArtistId, 1);
   }
 }

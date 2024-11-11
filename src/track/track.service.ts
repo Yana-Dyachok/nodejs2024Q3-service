@@ -59,6 +59,11 @@ export class TrackService {
     if (index === -1) {
       throw new NotFoundException(`Track with ID ${id} not found`);
     }
+    Database.favorites.tracks.forEach((favorites) => {
+      if (favorites.id === id) {
+        favorites.id = null;
+      }
+    });
     Database.tracks.splice(index, 1);
   }
 }
