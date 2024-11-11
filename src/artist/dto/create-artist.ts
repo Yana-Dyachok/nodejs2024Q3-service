@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsBoolean, IsNotEmpty } from 'class-validator';
-import { IArtist } from 'src/types/interfaces/interfaces';
+import { IArtist } from 'src/types/interfaces';
 
 export class CreateArtistDto implements Omit<IArtist, 'id'> {
   @ApiProperty({ type: String, description: 'Artist name', example: 'Beyonce' })

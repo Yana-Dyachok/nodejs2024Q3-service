@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { ICreateUserDto } from 'src/types/interfaces/interfaces';
+import { ICreateUserDto } from 'src/types/interfaces';
 
 export class CreateUserDto implements ICreateUserDto {
   @ApiProperty({

@@ -7,7 +7,7 @@ import {
   IsOptional,
 } from 'class-validator';
 import { v4 as uuid } from 'uuid';
-import { IAlbum } from 'src/types/interfaces/interfaces';
+import { IAlbum } from 'src/types/interfaces';
 
 export class Album implements IAlbum {
   @ApiProperty({

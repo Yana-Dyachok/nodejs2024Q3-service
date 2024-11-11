@@ -14,7 +14,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { TrackService } from './tracks.service';
+import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track';
 import { UpdateTrackDto } from './dto/update-track';
 

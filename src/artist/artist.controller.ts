@@ -16,7 +16,7 @@ import {
 } from '@nestjs/common';
 import { CreateArtistDto } from './dto/create-artist';
 import { UpdateArtistDto } from './dto/update-artist';
-import { ArtistService } from './artists.service';
+import { ArtistService } from './artist.service';
 
 @Controller('artist')
 export class ArtistController {

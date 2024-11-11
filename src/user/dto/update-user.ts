@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PartialType } from '@nestjs/mapped-types';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { CreateUserDto } from './create-user';
-import { IUpdatePasswordDto } from 'src/types/interfaces/interfaces';
+import { IUpdatePasswordDto } from 'src/types/interfaces';
 
 export class UpdateUserDto
   extends PartialType(CreateUserDto)

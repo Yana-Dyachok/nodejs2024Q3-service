@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsUUID,
 } from 'class-validator';
-import { IAlbum } from 'src/types/interfaces/interfaces';
+import { IAlbum } from 'src/types/interfaces';
 
 export class CreateAlbumDto implements Omit<IAlbum, 'id'> {
   @ApiProperty({

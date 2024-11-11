@@ -1,7 +1,8 @@
 import { User } from 'src/user/entities/user.entity';
-import { Artist } from 'src/artists/entities/artist.entity';
+import { Artist } from 'src/artist/entities/artist.entity';
 import { Album } from 'src/album/entities/album.entity';
 import { Track } from 'src/track/entities/track.entity';
+import { Favorite } from 'src/favorite/entities/favorite.entity';
 
 export interface IUser {
   id: string;
@@ -60,4 +61,5 @@ export interface IDatabase {
   artists: Artist[];
   albums: Album[];
   tracks: Track[];
+  favorites: Favorite;
 }

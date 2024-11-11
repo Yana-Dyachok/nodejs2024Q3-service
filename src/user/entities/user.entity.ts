@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { v4 as uuid } from 'uuid';
-import { IUser } from 'src/types/interfaces/interfaces';
+import { IUser } from 'src/types/interfaces';
 
 export class User implements IUser {
   @ApiProperty({ required: true, format: 'uuid' })

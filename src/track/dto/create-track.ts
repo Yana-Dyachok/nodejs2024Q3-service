@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsInt,
 } from 'class-validator';
-import { ITrack } from 'src/types/interfaces/interfaces';
+import { ITrack } from 'src/types/interfaces';
 
 export class CreateTrackDto implements Omit<ITrack, 'id'> {
   @ApiProperty({

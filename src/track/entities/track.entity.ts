@@ -7,7 +7,7 @@ import {
   IsOptional,
 } from 'class-validator';
 import { v4 as uuid } from 'uuid';
-import { ITrack } from 'src/types/interfaces/interfaces';
+import { ITrack } from 'src/types/interfaces';
 
 export class Track implements ITrack {
   @ApiProperty({

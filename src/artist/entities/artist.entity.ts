@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsBoolean } from 'class-validator';
 import { v4 as uuid } from 'uuid';
-import { IArtist } from 'src/types/interfaces/interfaces';
+import { IArtist } from 'src/types/interfaces';
 
 export class Artist implements IArtist {
   @ApiProperty({ required: true, format: 'uuid' })

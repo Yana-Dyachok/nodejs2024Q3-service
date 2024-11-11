@@ -11,7 +11,7 @@ import { Database } from 'src/db/db';
 
 @Injectable()
 export class ArtistService {
-  findAll() {
+  findAll(): Artist[] {
     return Database.artists;
   }
 
