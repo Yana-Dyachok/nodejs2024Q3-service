@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
+import { v4 as uuid } from 'uuid';
 import { IUser } from 'src/types/interfaces';
 
 export class User implements IUser {
@@ -26,8 +27,17 @@ export class User implements IUser {
   version: number;
 
   @ApiProperty({ required: true, example: Date.now() })
-  createdAt: number; 
+  createdAt: number;
 
   @ApiProperty({ required: true, example: Date.now() })
-  updatedAt: number; 
+  updatedAt: number;
+
+  constructor(user: Partial<User>) {
+    this.id = uuid();
+    this.login = user.login;
+    this.password = user.password;
+    this.version = 1;
+    this.createdAt = Date.now();
+    this.updatedAt = Date.now();
+  }
 }

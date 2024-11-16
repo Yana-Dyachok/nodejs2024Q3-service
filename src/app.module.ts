@@ -8,6 +8,7 @@ import { ArtistsModule } from './artist/artist.module';
 import { AlbumModule } from './album/album.module';
 import { TracksModule } from './track/track.module';
 import { FavoriteModule } from './favorite/favorite.module';
+import { PrismaModule } from 'prisma/prisma.module';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -27,6 +28,7 @@ const port = process.env.PORT;
     AlbumModule,
     TracksModule,
     FavoriteModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

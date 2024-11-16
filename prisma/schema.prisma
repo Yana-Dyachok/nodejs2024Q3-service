@@ -47,8 +47,9 @@ model Track {
 }
 
 model Favorite {
-  id       String   @id @default(uuid())
-  artists  Artist[] @relation("FavoriteArtists")
-  albums   Album[]  @relation("FavoriteAlbums")
-  tracks   Track[]  @relation("FavoriteTracks")
+  id      String   @id @default(uuid())
+  artists Artist[] @relation("FavoriteArtists")
+  albums  Album[]  @relation("FavoriteAlbums")
+  tracks  Track[]  @relation("FavoriteTracks")
 }
+
