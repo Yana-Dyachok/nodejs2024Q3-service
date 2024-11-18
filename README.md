@@ -43,7 +43,7 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 | `npm run test -- <path to suite>  `     | To run only one of all test suites         |
 | `npm run test:auth` | To run all test with authorization|
 | `npm run test:auth -- <path to suite> `| To run only specific test suite with authorization|
-| `npm run jest: i`| Install jest |
+| `npm run jest:i`| Install jest |
 | `npm run docker` | Running application with Docker |
 |`npm run docker:build` | Build application with Docker|
 | `docker images` | Check size of the Docker image with application |
