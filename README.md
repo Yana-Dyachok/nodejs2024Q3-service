@@ -24,6 +24,11 @@ git checkout develop-2
 npm run docker
 
 ```
+p.s. If u will have such a problem `'jest' is not recognized as an internal or external command`, use:
+```
+npm run jest:i
+
+```
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
@@ -38,6 +43,7 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 | `npm run test -- <path to suite>  `     | To run only one of all test suites         |
 | `npm run test:auth` | To run all test with authorization|
 | `npm run test:auth -- <path to suite> `| To run only specific test suite with authorization|
+| `npm run jest: i`| Install jest |
 | `npm run docker` | Running application with Docker |
 |`npm run docker:build` | Build application with Docker|
 | `docker images` | Check size of the Docker image with application |
