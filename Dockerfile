@@ -1,9 +1,11 @@
 FROM node:22-alpine As development
-WORKDIR /usr/app
+WORKDIR /app
 COPY package*.json . 
 COPY prisma ./prisma
-RUN npm ci --legacy-peer-deps && npm cache clean --force
+RUN npm install --legacy-peer-deps  --force && npm cache clean --force
 RUN npx prisma generate
-EXPOSE 4000
 COPY . .
+EXPOSE 4000
 CMD ["npm", "run", "start:dev"]
+
+

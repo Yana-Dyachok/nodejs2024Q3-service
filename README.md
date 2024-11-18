@@ -41,8 +41,9 @@ For more information about OpenAPI/Swagger please visit https://swagger.io/.
 | `npm run docker` | Running application with Docker |
 |`npm run docker:build` | Build application with Docker|
 | `docker images` | Check size of the Docker image with application |
-| `npm run docker:down` | Stop application with Docker |
+| `npm run docker:down` | Stops and removes all containers running with docker-compose |
 |`npm run docker:scan` | Script for vulnerabilities scanning|
+| `npm run docker:stop` | Stop containers that were started via docker-compose up  but not removed |
 
 ## API
 Available endpoints:

@@ -4,7 +4,6 @@ node_modules
 dist
 **/Dockerfile
 test
-dist 
 vscode
 README.md
 **/docker-compose.yml
