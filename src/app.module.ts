@@ -9,6 +9,7 @@ import { AlbumModule } from './album/album.module';
 import { TracksModule } from './track/track.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { PrismaModule } from 'prisma/prisma.module';
+import { LoggingService } from './logging/logging.service';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -31,6 +32,7 @@ const port = process.env.PORT;
     PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LoggingService],
+  exports: [LoggingService],
 })
 export class AppModule {}
