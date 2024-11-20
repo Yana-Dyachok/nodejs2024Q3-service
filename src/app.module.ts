@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 import { AppController } from './app.controller';
@@ -10,6 +10,7 @@ import { TracksModule } from './track/track.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { PrismaModule } from 'prisma/prisma.module';
 import { LoggingService } from './logging/logging.service';
+import { LoggingMiddleware } from './logging/logging-middleware';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -35,4 +36,8 @@ const port = process.env.PORT;
   providers: [AppService, LoggingService],
   exports: [LoggingService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
+}
