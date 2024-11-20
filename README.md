@@ -15,11 +15,20 @@ git clone https://github.com/Yana-Dyachok/nodejs2024Q3-service
 ```
 cd nodejs2024Q3-service
 ```
-3.  Switch the branch to `develop-2`
+3.  Switch the branch to `develop-3`
 ```
-git checkout develop-2
+git checkout develop-3
 ```
-4. Running application with Docker
+4.  Installing NPM modules
+```
+npm install --legacy-peer-deps
+```
+5. Create .env file (based on .env.example): ./.env (if it's missing)
+6.  Running application
+```
+npm start
+```
+7. Running application with Docker
 ```
 npm run docker
 

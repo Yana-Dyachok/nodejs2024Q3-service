@@ -1,8 +1,6 @@
 import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ArtistsModule } from './artist/artist.module';
 import { AlbumModule } from './album/album.module';
@@ -32,8 +30,7 @@ const port = process.env.PORT;
     FavoriteModule,
     PrismaModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, LoggingService],
+  providers: [LoggingService],
   exports: [LoggingService],
 })
 export class AppModule implements NestModule {
