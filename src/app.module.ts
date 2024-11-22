@@ -9,6 +9,8 @@ import { FavoriteModule } from './favorite/favorite.module';
 import { PrismaModule } from 'prisma/prisma.module';
 import { LoggingService } from './logging/logging.service';
 import { LoggingMiddleware } from './logging/logging-middleware';
+import { AuthMiddleware } from './auth/auth-middleware';
+import { AuthModule } from './auth/auth-module';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -23,6 +25,7 @@ const port = process.env.PORT;
         }),
       ],
     }),
+    AuthModule,
     UserModule,
     ArtistsModule,
     AlbumModule,
@@ -36,5 +39,6 @@ const port = process.env.PORT;
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggingMiddleware).forRoutes('*');
+    consumer.apply(AuthMiddleware).exclude('auth/(.*)').forRoutes('*');
   }
 }
