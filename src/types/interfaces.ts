@@ -11,6 +11,7 @@ export interface IUser {
   version: number;
   createdAt: number;
   updatedAt: number;
+  refreshToken?: string;
 }
 
 export interface IArtist {
@@ -62,4 +63,9 @@ export interface IDatabase {
   albums: Album[];
   tracks: Track[];
   favorites: Favorite;
+}
+
+export interface IAccessToken {
+  login: string;
+  userId: string;
 }

@@ -6,15 +6,12 @@ const createUserDto = {
 };
 
 const getTokenAndUserId = async (request) => {
-  // create user
   const {
     body: { id: mockUserId },
   } = await request
     .post(authRoutes.signup)
     .set('Accept', 'application/json')
     .send(createUserDto);
-
-  // get token
   const {
     body: { accessToken, refreshToken },
   } = await request

@@ -24,6 +24,16 @@ export class UserService {
     return user;
   }
 
+  findLogin(login: string) {
+    const user = Database.users.find((user) => user.login === login);
+    if (!user) {
+      throw new NotFoundException(
+        `User with login ${login} is not found in the database`,
+      );
+    }
+    return user;
+  }
+
   create(createUserDto: CreateUserDto) {
     const newUser = new User(createUserDto);
     Database.users.push(newUser);

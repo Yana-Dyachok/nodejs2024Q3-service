@@ -8,36 +8,33 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './auth-service';
-import { AuthDto } from './dto/auth';
+import { CreateUserDto } from 'src/user/dto/create-user';
 import { RefreshDto } from './dto/refresh';
+import { Public } from 'src/decorators/Public.decorators';
 
 @Controller('auth')
+@UsePipes(new ValidationPipe())
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
+  @Public()
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async signup(@Body() dto: AuthDto): Promise<{ message: string }> {
-    const message = await this.authService.signup(dto.login, dto.password);
-    return { message };
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.authService.signup(createUserDto.login, createUserDto.password);
   }
 
   @Post('login')
+  @Public()
   @HttpCode(HttpStatus.OK)
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async login(
-    @Body() dto: AuthDto,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    return await this.authService.login(dto.login, dto.password);
+  login(@Body() createUserDto: CreateUserDto) {
+    return this.authService.login(createUserDto.login, createUserDto.password);
   }
 
   @Post('refresh')
+  @Public()
   @HttpCode(HttpStatus.OK)
-  @UsePipes(new ValidationPipe({ whitelist: true }))
-  async refresh(
-    @Body() dto: RefreshDto,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    return await this.authService.refreshToken(dto.refreshToken);
+  refresh(@Body() refreshTokenDto: RefreshDto) {
+    return this.authService.refresh(refreshTokenDto.refreshToken);
   }
 }

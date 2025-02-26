@@ -1,93 +1,70 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
-import { ConfigService } from '@nestjs/config';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
-  private users: { login: string; password: string; refreshToken?: string }[] =
-    [];
-
-  constructor(private readonly configService: ConfigService) {}
-
-  async signup(login: string, password: string): Promise<string> {
-    const saltRounds = Number(this.configService.get('CRYPT_SALT')) || 10;
-    if (isNaN(saltRounds) || saltRounds <= 0) {
-      throw new Error('Invalid salt rounds configuration');
-    }
-
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const userExists = this.users.find((user) => user.login === login);
-    if (userExists) {
-      throw new UnauthorizedException('User already exists');
-    }
-
-    this.users.push({ login, password: hashedPassword });
-    return 'User created successfully';
+  private salt: number;
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {
+    this.salt = parseInt(process.env.CRYPT_SALT);
   }
 
-  async login(
-    login: string,
-    password: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    const user = this.users.find((user) => user.login === login);
+  async signup(login: string, password: string): Promise<any> {
+    try {
+      const hashPassword = await bcrypt.hash(password, this.salt);
+      const { id } = await this.userService.create({
+        login,
+        password: hashPassword,
+      });
+      return { id, message: 'User registered successfully!' };
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
+  async login(login: string, password: string): Promise<any> {
+    const user = await this.userService.findLogin(login);
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const accessToken = this.generateToken(user.login, 'ACCESS');
-    const refreshToken = this.generateToken(user.login, 'REFRESH');
-    user.refreshToken = refreshToken;
-
-    return { accessToken, refreshToken };
+    const payload = { userId: user.id, login: user.login };
+    const tokens = await this.getToken(payload);
+    return tokens;
   }
 
-  async refreshToken(
-    refreshToken: string,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  async refresh(token: string): Promise<unknown> {
+    if (!token) throw new UnauthorizedException('Refresh token is not valid');
     try {
-      const secret = this.configService.get<string>(
-        'JWT_SECRET_REFRESH_KEY',
-        'default_refresh_secret',
-      );
-      const payload = jwt.verify(refreshToken, secret) as { login: string };
-
-      const user = this.users.find(
-        (u) => u.login === payload.login && u.refreshToken === refreshToken,
-      );
-      if (!user) {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
-
-      const newAccessToken = this.generateToken(user.login, 'ACCESS');
-      const newRefreshToken = this.generateToken(user.login, 'REFRESH');
-      user.refreshToken = newRefreshToken;
-
-      return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+      const { userId, login } = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET_REFRESH_KEY,
+      });
+      const payload = { userId: userId, login: login };
+      return await this.getToken(payload);
     } catch (error) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new ForbiddenException('Refresh token is not valid');
     }
   }
 
-  private generateToken(login: string, type: 'ACCESS' | 'REFRESH'): string {
-    const secretKey =
-      type === 'ACCESS'
-        ? this.configService.get<string>(
-            'JWT_SECRET_KEY',
-            'default_access_secret',
-          )
-        : this.configService.get<string>(
-            'JWT_SECRET_REFRESH_KEY',
-            'default_refresh_secret',
-          );
-
-    const expiresIn =
-      type === 'ACCESS'
-        ? this.configService.get<string>('TOKEN_EXPIRE_TIME', '1h')
-        : this.configService.get<string>('TOKEN_REFRESH_EXPIRE_TIME', '7d');
-
-    return jwt.sign({ login }, secretKey, { expiresIn });
+  private async getToken(payload: { userId: string; login: string }) {
+    return {
+      accessToken: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET_KEY,
+        expiresIn: process.env.TOKEN_EXPIRE_TIME,
+      }),
+      refreshToken: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET_REFRESH_KEY,
+        expiresIn: process.env.TOKEN_REFRESH_EXPIRE_TIME,
+      }),
+    };
   }
 }
